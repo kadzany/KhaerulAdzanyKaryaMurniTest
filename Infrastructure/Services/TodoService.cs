@@ -23,16 +23,19 @@ namespace Infrastructure.Services
                 {
                     case IncomingType.Today:
                         return from i in GetAll()
-                                 where i.ExpiredAt <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
-                                 select i;
+                                 where i.ExpiredAt <= DateTime.Now
+                                 && !i.IsDone
+                               select i;
                     case IncomingType.NextDay:
                         return from i in GetAll()
-                               where i.ExpiredAt <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1)
-                                 select i;
+                               where i.ExpiredAt <= DateTime.Now.AddDays(1)
+                               && !i.IsDone
+                               select i;
                     case IncomingType.CurrentWeek:
                         return from i in GetAll()
-                               where i.ExpiredAt <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 7)
-                                 select i;
+                               where i.ExpiredAt <= DateTime.Now.AddDays(7)
+                               && !i.IsDone
+                               select i;
                     default:
                         return null;
                 }

@@ -227,14 +227,14 @@ namespace UnitTest
         }
 
         /// <summary>
-        /// Get incoming todo
+        /// Get incoming todo for today
         /// </summary>
         [Test]
-        public void CanGetIncomingTodo()
+        public void CanGetIncomingTodoToday()
         {
             // setup
             var options = new DbContextOptionsBuilder<TodoContext>()
-               .UseInMemoryDatabase(databaseName: "TodoDb8")
+               .UseInMemoryDatabase(databaseName: "TodoDb8_Today")
                .Options;
 
             using (var context = new TodoContext(options))
@@ -253,7 +253,64 @@ namespace UnitTest
 
             // assert
             Assert.AreEqual(2, result.Count()); // incoming for today are 2
+        }
 
+        /// <summary>
+        /// Get incoming todo for next day
+        /// </summary>
+        [Test]
+        public void CanGetIncomingTodoNextDay()
+        {
+            // setup
+            var options = new DbContextOptionsBuilder<TodoContext>()
+               .UseInMemoryDatabase(databaseName: "TodoDb8_NextDay")
+               .Options;
+
+            using (var context = new TodoContext(options))
+            {
+                context.Todos.Add(new Todo { Title = "Test Todo 1", Description = "Description Todo 1", ExpiredAt = DateTime.Now, IsDone = true});
+                context.Todos.Add(new Todo { Title = "Test Todo 2", Description = "Description Todo 2", ExpiredAt = DateTime.Now, IsDone = true });
+                context.Todos.Add(new Todo { Title = "Test Todo 3", Description = "Description Todo 3", ExpiredAt = DateTime.Now.AddDays(1) });
+                context.Todos.Add(new Todo { Title = "Test Todo 4", Description = "Description Todo 4", ExpiredAt = DateTime.Now.AddDays(7) });
+                context.Todos.Add(new Todo { Title = "Test Todo 5", Description = "Description Todo 5", ExpiredAt = DateTime.Now.AddDays(7) });
+                context.SaveChanges();
+            }
+
+            // operation
+            var todoService = new TodoService(new TodoContext(options));
+            var result = todoService.GetIncomingTodo(IncomingType.NextDay);
+
+            // assert
+            Assert.AreEqual(1, result.Count()); // incoming for next day are 1
+        }
+
+        /// <summary>
+        /// Get incoming todo for current week
+        /// </summary>
+        [Test]
+        public void CanGetIncomingTodoCurrentWeek()
+        {
+            // setup
+            var options = new DbContextOptionsBuilder<TodoContext>()
+               .UseInMemoryDatabase(databaseName: "TodoDb8_CurrentWeek")
+               .Options;
+
+            using (var context = new TodoContext(options))
+            {
+                context.Todos.Add(new Todo { Title = "Test Todo 1", Description = "Description Todo 1", ExpiredAt = DateTime.Now, IsDone = true });
+                context.Todos.Add(new Todo { Title = "Test Todo 2", Description = "Description Todo 2", ExpiredAt = DateTime.Now });
+                context.Todos.Add(new Todo { Title = "Test Todo 3", Description = "Description Todo 3", ExpiredAt = DateTime.Now.AddDays(1) });
+                context.Todos.Add(new Todo { Title = "Test Todo 4", Description = "Description Todo 4", ExpiredAt = DateTime.Now.AddDays(7) });
+                context.Todos.Add(new Todo { Title = "Test Todo 5", Description = "Description Todo 5", ExpiredAt = DateTime.Now.AddDays(14) });
+                context.SaveChanges();
+            }
+
+            // operation
+            var todoService = new TodoService(new TodoContext(options));
+            var result = todoService.GetIncomingTodo(IncomingType.CurrentWeek);
+
+            // assert
+            Assert.AreEqual(3, result.Count()); // incoming for current week are 3
         }
     }
 }
