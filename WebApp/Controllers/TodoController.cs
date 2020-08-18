@@ -118,8 +118,8 @@ namespace WebApp.Controllers
             }
         }
 
-        // POST api/<TodoController>/GetIncomingTodo
-        [HttpGet("GetIncomingTodo")]
+        // GET api/<TodoController>/GetIncomingTodo
+        [HttpGet("GetIncomingTodo/{incomingType}")]
         public IActionResult GetIncomingTodo(IncomingType incomingType)
         {
             try
