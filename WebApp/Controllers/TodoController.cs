@@ -89,7 +89,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<TodoController>/MarkDone/5
-        [HttpGet("/MarkDone/{id}")]
+        [HttpGet("MarkDone/{id}")]
         public IActionResult MarkDone(int id)
         {
             try
@@ -104,7 +104,7 @@ namespace WebApp.Controllers
         }
 
         // POST api/<TodoController>/SetPercentComplete
-        [HttpPost("/SetPercentComplete")]
+        [HttpPost("SetPercentComplete")]
         public IActionResult SetPercentage([FromBody]SetTodoPercentCompleteDto setTodoPercentCompleteDto)
         {
             try
@@ -119,7 +119,7 @@ namespace WebApp.Controllers
         }
 
         // POST api/<TodoController>/GetIncomingTodo
-        [HttpGet("/GetIncomingTodo")]
+        [HttpGet("GetIncomingTodo")]
         public IActionResult GetIncomingTodo(IncomingType incomingType)
         {
             try
