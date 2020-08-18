@@ -1,4 +1,6 @@
-# KhaerulAdzanyMitraKaryaTest
+# KhaerulAdzany test for CV KARYA MURNI 
+
+
 Run application:
 - Hit F5 on Visual Studio Community 2019
 
