@@ -89,7 +89,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<TodoController>/MarkDone/5
-        [HttpGet("{id}")]
+        [HttpGet("/MarkDone/{id}")]
         public IActionResult MarkDone(int id)
         {
             try
