@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Infrastructure.Dto
+﻿namespace Infrastructure.Dto
 {
     public enum IncomingType
     {

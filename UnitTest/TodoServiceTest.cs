@@ -5,10 +5,8 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using System;
 using System.Linq;
-using System.Net.Mime;
 
 namespace UnitTest
 {
